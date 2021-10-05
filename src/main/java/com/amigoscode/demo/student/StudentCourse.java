@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class StudentCourse {
 
-    private final UUID studentId;
-    private final UUID courseId;
+    private final int studentId;
+    private final int courseId;
     private final String name;
     private final String description;
     private final String department;
@@ -15,15 +15,7 @@ public class StudentCourse {
     private final LocalDate endDate;
     private final Integer grade;
 
-    public StudentCourse(UUID studentId,
-                         UUID courseId,
-                         String name,
-                         String description,
-                         String department,
-                         String teacherName,
-                         LocalDate startDate,
-                         LocalDate endDate,
-                         Integer grade) {
+    public StudentCourse(int studentId, int courseId, String name, String description, String department, String teacherName, LocalDate startDate, LocalDate endDate, Integer grade) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.name = name;
@@ -35,11 +27,11 @@ public class StudentCourse {
         this.grade = grade;
     }
 
-    public UUID getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
-    public UUID getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
@@ -58,7 +50,6 @@ public class StudentCourse {
     public String getTeacherName() {
         return teacherName;
     }
-
 
     public LocalDate getStartDate() {
         return startDate;

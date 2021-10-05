@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 public class Student {
 
-    private final UUID studentId;
+    private final int studentId;
 
     @NotBlank
     private final String firstName;
@@ -22,7 +21,7 @@ public class Student {
     @NotNull
     private final Gender gender;
 
-    public Student(@JsonProperty("studentId") UUID studentId,
+    public Student(@JsonProperty("studentId") int studentId,
                    @JsonProperty("firstName") String firstName,
                    @JsonProperty("lastName") String lastName,
                    @JsonProperty("email") String email,
@@ -34,7 +33,7 @@ public class Student {
         this.gender = gender;
     }
 
-    public UUID getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 

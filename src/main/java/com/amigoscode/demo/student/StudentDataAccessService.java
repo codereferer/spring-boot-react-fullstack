@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class StudentDataAccessService {
@@ -32,7 +31,7 @@ public class StudentDataAccessService {
         return jdbcTemplate.query(sql, mapStudentFomDb());
     }
 
-    int insertStudent(UUID studentId, Student student) {
+    int insertStudent(int studentId, Student student) {
         String sql = "" +
                 "INSERT INTO student (" +
                 " student_id, " +
@@ -66,7 +65,7 @@ public class StudentDataAccessService {
         );
     }
 
-    List<StudentCourse> selectAllStudentCourses(UUID studentId) {
+    List<StudentCourse> selectAllStudentCourses(int studentId) {
         String sql = "" +
                 "SELECT " +
                 " student.student_id, " +
@@ -92,8 +91,8 @@ public class StudentDataAccessService {
     private RowMapper<StudentCourse> mapStudentCourseFromDb() {
         return (resultSet, i) ->
                 new StudentCourse(
-                        UUID.fromString(resultSet.getString("student_id")),
-                        UUID.fromString(resultSet.getString("course_id")),
+                        resultSet.getInt("student_id"),
+                        resultSet.getInt("course_id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getString("department"),
@@ -108,8 +107,8 @@ public class StudentDataAccessService {
 
     private RowMapper<Student> mapStudentFomDb() {
         return (resultSet, i) -> {
-            String studentIdStr = resultSet.getString("student_id");
-            UUID studentId = UUID.fromString(studentIdStr);
+            int studentIdStr = resultSet.getInt("student_id");
+            int studentId = studentIdStr;
 
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
@@ -127,7 +126,7 @@ public class StudentDataAccessService {
         };
     }
 
-    int updateEmail(UUID studentId, String email) {
+    int updateEmail(int studentId, String email) {
         String sql = "" +
                 "UPDATE student " +
                 "SET email = ? " +
@@ -135,7 +134,7 @@ public class StudentDataAccessService {
         return jdbcTemplate.update(sql, email, studentId);
     }
 
-    int updateFirstName(UUID studentId, String firstName) {
+    int updateFirstName(int studentId, String firstName) {
         String sql = "" +
                 "UPDATE student " +
                 "SET first_name = ? " +
@@ -143,7 +142,7 @@ public class StudentDataAccessService {
         return jdbcTemplate.update(sql, firstName, studentId);
     }
 
-    int updateLastName(UUID studentId, String lastName) {
+    int updateLastName(int studentId, String lastName) {
         String sql = "" +
                 "UPDATE student " +
                 "SET last_name = ? " +
@@ -152,7 +151,7 @@ public class StudentDataAccessService {
     }
 
     @SuppressWarnings("ConstantConditions")
-    boolean selectExistsEmail(UUID studentId, String email) {
+    boolean selectExistsEmail(int studentId, String email) {
         String sql = "" +
                 "SELECT EXISTS ( " +
                 "   SELECT 1 " +
@@ -167,7 +166,7 @@ public class StudentDataAccessService {
         );
     }
 
-    int deleteStudentById(UUID studentId) {
+    int deleteStudentById(int studentId) {
         String sql = "" +
                 "DELETE FROM student " +
                 "WHERE student_id = ?";

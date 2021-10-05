@@ -25,7 +25,7 @@ public class StudentController {
 
     @GetMapping(path = "{studentId}/courses")
     public List<StudentCourse> getAllCoursesForStudent(
-            @PathVariable("studentId") UUID studentId) {
+            @PathVariable("studentId") int studentId) {
         return studentService.getAllCoursesForStudent(studentId);
     }
 
@@ -35,13 +35,13 @@ public class StudentController {
     }
 
     @PutMapping(path = "{studentId}")
-    public void updateStudent(@PathVariable("studentId") UUID studentId,
+    public void updateStudent(@PathVariable("studentId") int studentId,
                               @RequestBody Student student) {
         studentService.updateStudent(studentId, student);
     }
 
     @DeleteMapping("{studentId}")
-    public void deleteStudent(@PathVariable("studentId") UUID studentId) {
+    public void deleteStudent(@PathVariable("studentId") int studentId) {
         studentService.deleteStudent(studentId);
     }
 

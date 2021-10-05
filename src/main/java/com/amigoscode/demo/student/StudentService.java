@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class StudentService {
@@ -28,12 +27,11 @@ public class StudentService {
     }
 
     void addNewStudent(Student student) {
-        addNewStudent(null, student);
+        addNewStudent(1, student);
     }
 
-    void addNewStudent(UUID studentId, Student student) {
-        UUID newStudentId = Optional.ofNullable(studentId)
-                .orElse(UUID.randomUUID());
+    void addNewStudent(int studentId, Student student) {
+        int newStudentId = studentId;
 
         if (!emailValidator.test(student.getEmail())) {
             throw new ApiRequestException(student.getEmail() + " is not valid");
@@ -46,11 +44,11 @@ public class StudentService {
         studentDataAccessService.insertStudent(newStudentId, student);
     }
 
-    List<StudentCourse> getAllCoursesForStudent(UUID studentId) {
+    List<StudentCourse> getAllCoursesForStudent(int studentId) {
         return studentDataAccessService.selectAllStudentCourses(studentId);
     }
 
-    public void updateStudent(UUID studentId, Student student) {
+    public void updateStudent(int studentId, Student student) {
         Optional.ofNullable(student.getEmail())
                 .ifPresent(email -> {
                     boolean taken = studentDataAccessService.selectExistsEmail(studentId, email);
@@ -72,7 +70,7 @@ public class StudentService {
                 .ifPresent(lastName -> studentDataAccessService.updateLastName(studentId, lastName));
     }
 
-    void deleteStudent(UUID studentId) {
+    void deleteStudent(int studentId) {
         studentDataAccessService.deleteStudentById(studentId);
     }
 }
